@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/login.css">
+    <script type="text/javascript" src = 'js/login.js'></script>
+    <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+    <title>login</title>
+</head>
+<body>
+<div class = "container">
+    <div class = 'title'>
+        <h2>员工考勤后台管理系统</h2>
+    </div>
+    <div class="form">
+        <ul>
+            <p><li><label class="label">工号：</label><input type="text"  class="input"  name="工号" placeholder="请输入工号" ></li></p>
+            <p><li><label class="label">密码：</label><input type="password" class="input" name="密码" placeholder="请输入密码"></li></p>
+            <p><li><label class="label">职位：</label>
+            <select name="select" id="1">
+            <option class = 'select'>经理</option>
+            <option class = 'select'>主管</option>
+            </select>
+            </li></p>
+            <p><li><label class="label">验证码：</label><input type="text"  class="input"  name="验证码" placeholder="请输入验证码" ></li></p>
+            <input type="button" onclick="create_code()" class=" access" value="生成验证码"></input>
+            <span class="add phoKey"></span>
+        </ul>
+        <input type="button" id="btn_login" value="登录" onclick="login()">
+        <a href="" >忘记密码</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/daily.css">
+    <!--    <link rel="stylesheet" href="css/normalize.css">-->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/employment.css">
+    <link rel="stylesheet" href="css/create-employee.css"/>
+
+    <title>系统消息</title>
+</head>
+<body>
+<div class = 'title'>
+    <div class = 'left'><a>员工考勤</a>管理后台</div>
+    <div class="right">
+        <div class="mess-num"><a>5</a></div>
+        <a href="">
+            <i></i>
+            <div class="message">系统消息</div>
+        </a>
+        <a href="">
+            <i></i>
+            <div class="message">用户</div>
+        </a>
+    </div>
+</div>
+<div class="nav">
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">首页</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <i></i>
+            <div class="title2">考勤管理</div>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">加班审批</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">请假审批</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <i></i>
+            <div class="title2">工作管理</div>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">整体安排</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">细致安排</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">工作情况</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">薪酬统计</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">员工管理</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">用户管理</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">安全退出</div>
+            </a>
+        </dt>
+    </dl>
+</div>
+<div class ='main'>
+    <div1 id="creat_frame">
+
+        <div class = "title-create">
+            <h2>创建员工信息</h2>
+        </div>
+        <form method="post" action="js/create-employee.js">
+            <div class="title1-create">
+                <h2>员工基本信息</h2>
+            </div>
+            <hr align="bottom"  size="2" noshade="noshade"/>
+            <p><li><label class="label"> 部门   ：</label>
+            <label class="input">业务部</label>
+        </li></p>
+            <p><li><label class="label">初始密码：</label>
+            <label class="input">123456</label>
+        </li></p>
+            <p><li><label class="label">员工姓名：</label>
+            <label class="input">陈曦</label>
+        </li></p>
+            <p><li><label class="label">员工工号：</label>
+            <h2>446</h2>
+        </li></p>
+            <p><li><label class="label">岗位名称：</label>
+            <h2>销售代表</h2>
+        </li></p>
+            <p><label class="label">岗位职责：</label>
+            <h2>负责指定的区域的高校图书馆及公共图书馆市场开发，客户维护等销售工作，分析市场信息，根据客户需求及竞争对手，提供合理化的建议和方案</h2>
+            </p>
+            <p><label class="label">性别：</label>
+            <h2>男</h2>
+            </p>
+            <p><li><label class="label">工作电话：</label>
+            <h2>18971335211</h2>
+        </li></p>
+            <p><li><label class="label">手机号码：</label>
+            <h2>15972060520</h2>
+        </li></p>
+            <p><li><label class="label">邮箱：</label>
+            <h2>93204248@qq.com</h2>
+        </li></p>
+            <p><li><label class="label">工作QQ：</label>
+            <h2>3493920</h2>
+        </li></p>
+            <p><li><label class="label">工作微信：</label>
+            <h2></h2>
+        </li></p>
+
+            <p><li><label class="label"> 职位级别 ：</label>
+            <h2>助理</h2>
+        </li></p>
+            <p><li><label class="label"> 职务类别 ：</label>
+            <h2>销售助理</h2>
+        </li></p>
+            </li></p>
+            <p><li><label class="label"> 员工状态 ：</label>
+            <h2>正常</h2>
+        </li></p>
+            <p><label class="label">是否离职：</label>
+            <h2>在职</h2>
+            </p>
+            <p><label class="label">备注：</label>
+            <h2>指派销售任务给此员工</h2>
+            </p>
+            <div class="page_show"></div>
+            setPage()
+            <li>
+                <div id="create_control">
+                    <input type="button" id="crt_canc" value="返回" onclick=""/>
+                </div>
+            </li>
+        </form>
+    </div1>
+</div>
+</body>
+</html>

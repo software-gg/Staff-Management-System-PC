@@ -1,0 +1,12 @@
+.div   {
+    margin: 0;
+    padding: 0;
+    font-size: 0px;
+}
+.main{
+    width: 80%;
+    height:600px;
+    background-color:white ;
+    float: right;
+    margin:0px 3%;
+}

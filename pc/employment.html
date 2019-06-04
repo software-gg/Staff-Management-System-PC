@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/daily.css">
+<!--    <link rel="stylesheet" href="css/normalize.css">-->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/employment.css">
+    <link rel="stylesheet" href="css/passwd.css"/>
+
+    <title>员工管理</title>
+</head>
+<body>
+<div class = 'title'>
+    <div class = 'left'><a>员工考勤</a>管理后台</div>
+    <div class="right">
+        <div class="mess-num"><a>5</a></div>
+        <a href="">
+            <i></i>
+            <div class="message">系统消息</div>
+        </a>
+        <a href="">
+            <i></i>
+            <div class="message">用户</div>
+        </a>
+    </div>
+</div>
+<div class="nav">
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">首页</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <i></i>
+            <div class="title2">考勤管理</div>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">加班审批</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">请假审批</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <i></i>
+            <div class="title2">工作管理</div>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">整体安排</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">细致安排</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">工作情况</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">薪酬统计</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">员工管理</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">用户管理</div>
+            </a>
+        </dt>
+    </dl>
+    <dl>
+        <dt>
+            <a href="">
+                <i></i>
+                <div class="title2">安全退出</div>
+            </a>
+        </dt>
+    </dl>
+</div>
+<div class ='main'>
+    <div1 id="passwd_frame">
+
+        <!--    <p id="image_logo"><img src="images/login/fly.png"></p>-->
+        <div class = "title-passwd">
+            <h2>修改用户密码信息</h2>
+        </div>
+        <form method="post" action="js/passwd.js">
+
+            <p><label class="label_input">用户名</label><input type="text" id="username" class="text_field"/></p>
+            <p><label class="label_input">旧密码</label><input type="text" id="password" class="text_field"/></p>
+            <p><label class="label_input">新密码</label><input type="text" id="newpasswd" class="text_field"/></p>
+
+            <div id="edit_control">
+                <input type="button" id="btn_save" value="保存" onclick="save();"/>
+                <input type="button" id="btn_cancel" value="取消" onclick="cancel();"/>
+            </div>
+        </form>
+    </div1>
+</div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+div {
+    margin:0px;
+    padding:0px;
+    font-size: 0px;
+}
+.title{
+    background-color:rgb(141,165,199) ;
+    height: 70px;
+    border-bottom: 2px solid black;
+}
+.left{
+    float: left;
+    margin-left: 3%;
+    font-size: 30px;
+    color: white;
+    line-height: 70px;
+}
+.left a{
+    /*color: skyblue;*/
+}
+.right{
+    float:right;
+    margin-right: 3%;
+}
+.mess-num{
+    border-radius: 50%;
+    height: 15px;
+    width: 15px;
+    background-color: red;
+    color: whitesmoke;
+    margin-top: 15px;
+}
+.mess-num a{
+    margin-left: 15%;
+    font-size: 15px;
+}
+.right i{
+    font-family: 'icomoon';
+    font-style: normal;
+    margin-left:10px;
+    font-size: 15px;
+}
+.message{
+    display: inline-block;
+    font-size: 15px;
+}
+.right a{
+    text-decoration: none;
+    padding-right: 10px;
+}
+.nav{
+    width: 15%;
+    height: 10px;
+}
+.nav a{
+    text-decoration: none;
+}
+.title2{
+    font-size: 20px;
+    display: inline-block;
+}
+dt{
+    line-height: 50px;
+    margin-left:20%;
+}
+dl{
+    border-bottom: 1px solid blue;
+    background-color:rgb(141,165,199) ;
+}
+dt i{
+    font-family: 'icomoon';
+    font-style: normal;
+    font-size: 20px;
+    padding-right: 35px;
+
+}
