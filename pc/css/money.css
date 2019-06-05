@@ -16,6 +16,14 @@
     margin-left: 40%;
 
 }
+.select3{
+    font-size:15px ;
+    width: 400px;
+    margin-left: 50px;
+    display: inline-block;
+    padding-top: 5px;
+}
+
 .select{
     float: right;
     font-size: 14px;
@@ -44,7 +52,7 @@
     font-size: 15px;
 }
 .month {
-    margin-left: 29%;
+    margin-left: 38%;
     font-size: 20px;
     display: inline-block;
 
@@ -129,7 +137,7 @@ table.imagetable td {
 .adjust{
     position: absolute;
     left: 37%;
-    bottom: 0px;
+    bottom: 30px;
 }
 .adjust .button2{
     margin-right: 40px;

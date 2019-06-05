@@ -16,11 +16,22 @@ div {
     line-height: 70px;
 }
 .left a{
-    /*color: skyblue;*/
+    color: skyblue;
 }
 .right{
     float:right;
     margin-right: 3%;
+}
+.operation1{
+    text-align:center;
+}
+.operation1 a{
+    text-decoration: none;
+    padding:0 15px;
+    font-size: 15px;
+}
+.operation1 a:nth-last-child(1){
+    padding-right: 0px;
 }
 .mess-num{
     border-radius: 50%;
@@ -50,7 +61,7 @@ div {
 }
 .nav{
     width: 15%;
-    height: 10px;
+    height: 50px;
 }
 .nav a{
     text-decoration: none;

@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="css/daily.css">
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/employment.css">
-    <title>员工管理</title>
+    <link rel="stylesheet" href="css/money.css">
+    <title>薪酬管理</title>
 </head>
 <body>
 <div class = 'title'>
@@ -118,9 +118,28 @@
     </dl>
 </div>
 <div class ='main'>
-<div class ='title3'>
-    员工考勤情况
-</div>
+    <div class ='title3'>
+        员工薪酬情况
+    </div>
+    <div style="float: left" class="select3">
+        请选择月份：
+        <form style="display: inline-block" action="" id="month">
+            <select name="请选择月份" value='请选择月份' id="">
+                <option class="key">一月</option>
+                <option class="key">二月</option>
+                <option class="key">三月</option>
+                <option class="key">四月</option>
+                <option class="key">五月</option>
+                <option class="key">六月</option>
+                <option class="key">七月</option>
+                <option class="key">八月</option>
+                <option class="key">九月</option>
+                <option class="key">十月</option>
+                <option class="key">十一月</option>
+                <option class="key">十二月</option>
+            </select>
+        </form>
+    </div>
     <div>
         <form action="" class="select clearfix">
             <input type="text" placeholder="请输入关键字">
@@ -133,50 +152,48 @@
         </form>
     </div>
     <div class="form">
-         <div class="title4">
-             <form action="" class="select2">
-                 <input type="button" class = 'button2' id="2" onclick="" value="添加工作安排">
-             </form>
-             <div class="month">
-                 <a href="" onclick="" id="last"><i></i></a>
-                 <span >2019年4月</span>
-                 <a href="" onclick="" id="next"><i></i></a>
-             </div>
-             <input type="button" class="button2 right" id="3" onclick="" value="导入安排">
-             <input type="button" class="button2 right" id="4" onclick="" value="导出安排">
-         </div>
+        <div class="title4">
+            <div class="month">
+                <a href="" onclick="" id="last"><i></i></a>
+                <span >2019年4月</span>
+                <a href="" onclick="" id="next"><i></i></a>
+            </div>
+        </div>
     </div>
     <div class = 'content'>
         <table class="imagetable">
             <tr>
-                <th>编号</th><th>员工姓名</th><th>部门</th><th>员工工号</th><th>日期</th><th>上班时间</th><th>下班时间</th><th>考勤情况</th><th>不在岗时间</th>
+                <th>编号</th><th>员工姓名</th><th>部门</th><th>员工工号</th><th>日期</th><th>基本工资</th><th>不在岗时长</th><th>请假时长</th><th>平均加班时长</th><th>节假日加班时长</th><th>薪酬统计</th>
             </tr>
             <tr>
-                <td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td class="red">Text 1B</td><td>Text 1C</td>
+                <td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td >Text 1B</td><td>Text 1C</td><td>Text 1C</td><td>Text 1C</td>
             </tr>
             <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="blue">Text 2B</td><td>Text 2C</td>
+                <td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td >Text 1B</td><td>Text 1C</td><td>Text 1C</td><td>Text 1C</td>
             </tr>
             <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="blue">Text 2B</td><td>Text 2C</td>
+                <td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td >Text 1B</td><td>Text 1C</td><td>Text 1C</td><td>Text 1C</td>
             </tr>
             <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="green">Text 2B</td><td>Text 2C</td>
+                <td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td >Text 1B</td><td>Text 1C</td><td>Text 1C</td><td>Text 1C</td>
             </tr>
             <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="green">Text 2B</td><td>Text 2C</td>
+                <td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td >Text 1B</td><td>Text 1C</td><td>Text 1C</td><td>Text 1C</td>
             </tr>
             <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="green">Text 2B</td><td>Text 2C</td>
+                <td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td >Text 1B</td><td>Text 1C</td><td>Text 1C</td><td>Text 1C</td>
             </tr>
             <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="green">Text 2B</td><td>Text 2C</td>
+                <td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td >Text 1B</td><td>Text 1C</td><td>Text 1C</td><td>Text 1C</td>
             </tr>
             <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="green">Text 2B</td><td>Text 2C</td>
+                <td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td >Text 1B</td><td>Text 1C</td><td>Text 1C</td><td>Text 1C</td>
             </tr>
             <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="green">Text 2B</td><td>Text 2C</td>
+                <td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td >Text 1B</td><td>Text 1C</td><td>Text 1C</td><td>Text 1C</td>
+            </tr>
+            <tr>
+                <td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td >Text 1B</td><td>Text 1C</td><td>Text 1C</td><td>Text 1C</td>
             </tr>
         </table>
         <div class="num">总共有<span  id="num" style="color: orangered ">200</span>条记录</div>
@@ -197,12 +214,6 @@
             <li style="margin-left: 30px">共<span id = 'k'>200</span>页</li>
             <li>第<span id ='l'>1</span>页</li>
         </ul>
-    </div>
-    <div >
-        <form action=""class="adjust">
-        <input type="button" onclick="" value="临时调整" class="button2">
-        <input type="button" onclick="" value="永久调整" class="button3" style="background-color: #b5cfd2">
-        </form>
     </div>
 </div>
 

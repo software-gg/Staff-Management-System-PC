@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/employment.css">
-    <title>员工管理</title>
+    <title>整体班次安排</title>
 </head>
 <body>
 <div class = 'title'>
@@ -118,9 +118,9 @@
     </dl>
 </div>
 <div class ='main'>
-<div class ='title3'>
-    员工考勤情况
-</div>
+    <div class ='title3'>
+        整体班次安排
+    </div>
     <div>
         <form action="" class="select clearfix">
             <input type="text" placeholder="请输入关键字">
@@ -133,50 +133,49 @@
         </form>
     </div>
     <div class="form">
-         <div class="title4">
-             <form action="" class="select2">
-                 <input type="button" class = 'button2' id="2" onclick="" value="添加工作安排">
-             </form>
-             <div class="month">
-                 <a href="" onclick="" id="last"><i></i></a>
-                 <span >2019年4月</span>
-                 <a href="" onclick="" id="next"><i></i></a>
-             </div>
-             <input type="button" class="button2 right" id="3" onclick="" value="导入安排">
-             <input type="button" class="button2 right" id="4" onclick="" value="导出安排">
-         </div>
+        <div class="title4">
+            <form action="" class="select2">
+                <input type="button" class = 'button2' id="2" onclick="" value="添加工作安排">
+            </form>
+            <div class="month">
+                <a href="" onclick="" id="last"><i></i></a>
+                <span >2019年4月</span>
+                <a href="" onclick="" id="next"><i></i></a>
+            </div>
+            <div  class=" right" style="font-size: 15px">
+                请选择月份：
+                <form style="display: inline-block" action="" id="working-type">
+                    <select name="请选择工作方式" value='请选择工作方式' id="">
+                        <option class="key">三班倒</option>
+                        <option class="key">小时工</option>
+                        <option class="key">八小时工作制</option>
+                    </select>
+                </form>
+            </div>
+        </div>
     </div>
     <div class = 'content'>
         <table class="imagetable">
             <tr>
-                <th>编号</th><th>员工姓名</th><th>部门</th><th>员工工号</th><th>日期</th><th>上班时间</th><th>下班时间</th><th>考勤情况</th><th>不在岗时间</th>
+                <th>班次编号</th><th>部门</th><th>日期</th><<th>上班时间</th><th>下班时间</th><th>班次性质</th><th>员工安排</th><th>操作</th>
             </tr>
             <tr>
-                <td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td class="red">Text 1B</td><td>Text 1C</td>
+                <td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td class="red">Text 1B</td><td>Text 1C</td>
+                <td class="operation1">
+                    <a href="">安排员工</a><a href="">编辑</a><a href="">删除</a>
+                </td>
             </tr>
             <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="blue">Text 2B</td><td>Text 2C</td>
+               <td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td class="blue">Text 1B</td><td>Text 1C</td>
+                <td class="operation1">
+                    <a href="">安排员工</a><a href="">编辑</a><a href="">删除</a>
+                </td>
             </tr>
             <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="blue">Text 2B</td><td>Text 2C</td>
-            </tr>
-            <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="green">Text 2B</td><td>Text 2C</td>
-            </tr>
-            <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="green">Text 2B</td><td>Text 2C</td>
-            </tr>
-            <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="green">Text 2B</td><td>Text 2C</td>
-            </tr>
-            <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="green">Text 2B</td><td>Text 2C</td>
-            </tr>
-            <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="green">Text 2B</td><td>Text 2C</td>
-            </tr>
-            <tr>
-                <td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td>Text 2B</td><td>Text 2C</td><td>Text 2A</td><td class="green">Text 2B</td><td>Text 2C</td>
+               <td>Text 1C</td><td >Text 1A</td><td>Text 1B</td><td>Text 1C</td><td >Text 1A</td><td class="green">Text 1B</td><td>Text 1C</td>
+                <td class="operation1">
+                    <a href="">安排员工</a><a href="">编辑</a><a href="">删除</a>
+                </td>
             </tr>
         </table>
         <div class="num">总共有<span  id="num" style="color: orangered ">200</span>条记录</div>
@@ -199,9 +198,9 @@
         </ul>
     </div>
     <div >
-        <form action=""class="adjust">
-        <input type="button" onclick="" value="临时调整" class="button2">
-        <input type="button" onclick="" value="永久调整" class="button3" style="background-color: #b5cfd2">
+        <form action=""class="adjust" style="bottom: 30%">
+            <input type="button" onclick="" value="临时调整" class="button2">
+            <input type="button" onclick="" value="永久调整" class="button3" style="background-color: #b5cfd2">
         </form>
     </div>
 </div>
