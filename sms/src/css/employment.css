@@ -1,0 +1,165 @@
+
+.div   {
+    margin: 0;
+    padding: 0;
+    font-size: 0px;
+}
+.main{
+    width: 80%;
+    height:670px;
+    float: right;
+    margin:0px 3%;
+    position: relative;
+}
+.title3{
+    font-size: 20px;
+    margin-left: 40%;
+
+}
+.select{
+    float: right;
+    font-size: 14px;
+    margin-right: 5px;
+    padding-top: 5px;
+
+}
+.button{
+    background-color: blue;
+    color: whitesmoke;
+    width: 50px;
+    height: 30px;
+    border-radius: 50%;
+}
+.title4{
+    margin-top: 10px;
+    margin-left: 8px;
+}
+.form{
+    height: 630px;
+    width: 100%;
+    background-color: lightcyan;
+    border-top:1px solid darkgray;
+    position: absolute;
+    margin-top: 40px;
+    font-size: 15px;
+}
+.month {
+    margin-left: 29%;
+    font-size: 20px;
+    display: inline-block;
+
+}
+.month a {
+    font-family: 'icomoon';
+    font-style: normal;
+    text-decoration: none;
+}
+.page li button {
+    font-family: 'icomoon';
+    font-style: normal;
+    text-decoration: none;
+}
+.select2{
+    float: left;
+}
+.button2{
+    font-size: 20px;
+    background-color: blue;
+    color: whitesmoke;
+}
+right{
+    float: right;
+}
+.content{
+    position: relative;
+    margin-left: 80px;
+    margin-top: 90px;
+}
+table.imagetable {
+    font-family: verdana,arial,sans-serif;
+    font-size:11px;
+    color:#333333;
+    border-width: 1px;
+    border-color: #999999;
+    border-collapse: collapse;
+    width: 90%;
+}
+table.imagetable th {
+    background:#b5cfd2 url('../image/cell-blue.jpg');
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #999999;
+    height: 35px;
+    line-height: 30px;
+}
+table.imagetable td {
+    background:#dcddc0 url('../image/cell-gray.jpg');
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #999999;
+    height: 30px;
+    line-height: 30px;
+}
+.green {
+    color: green;
+}
+.red{
+    color: red;
+}
+.blue{
+    color: blue;
+}
+.num{
+    font-size: 15px;
+    float: left;
+    display: inline-block;
+    padding-top: 8px;
+    margin-left: -40px;
+}
+.page{
+    font-size: 20px;
+    height: 35px;
+    width: 70%;
+    position: absolute;
+    left: 30%;
+    margin-top: 10px;
+}
+.adjust{
+    position: absolute;
+    left: 37%;
+    bottom: 0px;
+}
+.adjust .button2{
+    margin-right: 40px;
+}
+.page ul{
+    margin-left: -30px;
+}
+.page ul li{
+    font-size: 15px;
+    margin-right: 30px;
+    width: 10px;
+    float: left;
+    list-style: none;
+    margin-top: -10px;
+
+}
+.page ul li:nth-last-child(1),.page ul li:nth-last-child(2){
+    width: 60px;
+    display: inline-block;
+    font-size: 15px;
+}
+.page ul li:nth-last-child(1) span{
+    color: green;
+}
+
+.page ul li:nth-last-child(2) span{
+    color: deepskyblue;
+}
+.button3{
+    font-size: 20px;
+    background-color: orange;
+    color: whitesmoke;
+}

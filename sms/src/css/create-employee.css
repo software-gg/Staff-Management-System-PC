@@ -1,0 +1,103 @@
+body {
+    /*background-image: url("images/login/loginBac.jpg");*/
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+
+#create_frame {
+    width: 400px;
+    height: 260px;
+    padding: 13px;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -200px;
+    margin-top: -200px;
+
+    background-color: rgba(255, 255, 255);
+
+    border-radius: 10px;
+    text-align: center;
+}
+
+.title-create{
+    font-size: 12px;
+    font-family: 宋体;
+    margin-left:400px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    width: 240px;
+    height: 20px;
+    line-height: 28px;
+    text-align: center;
+
+    color: black;
+
+    /*border-top-left-radius: 5px;*/
+    /*border-bottom-left-radius: 5px;*/
+}
+.title1-create {
+    font-size: 10px;
+    font-family: 宋体;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 1000px;
+    height: 20px;
+    line-height: 28px;
+    text-align: left;
+
+    color: black;
+
+}
+
+.input{
+
+    height:10px ;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+}
+.text-label{
+    margin-top: 10px;
+    font-size: 10px;
+    font-family: 宋体;
+    width: 40px;
+    height: 40px;
+    line-height: 30px;
+
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+}
+.text-input{
+    vertical-align: top;
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.label{
+    font-size: 10px;
+    font-family: 宋体;
+
+    width: 40px;
+    height: 20px;
+    line-height: 30px;
+    text-align: center;
+
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.select{
+    text-align: left;
+    font-size: 10px;
+    font-family: 宋体;
+
+    width: 40px;
+    height: 20px;
+    line-height: 30px;
+    text-align: center;
+
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}

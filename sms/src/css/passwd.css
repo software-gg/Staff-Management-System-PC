@@ -1,0 +1,88 @@
+body {
+    /*background-image: url("images/login/loginBac.jpg");*/
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+#btn_save {
+    font-size: 14px;
+    font-family: 宋体;
+    margin-left: 20px;
+    margin-right:20px;
+    width: 120px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+
+    color: white;
+    background-color: #3BD9FF;
+    border-radius: 6px;
+    border: 0;
+
+    float: left;
+}
+#btn_cancel {
+    font-size: 14px;
+    font-family: 宋体;
+    margin-right: 20px;
+    margin-left:20px;
+    width: 120px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+
+    color: white;
+    background-color: #3BD9FF;
+    border-radius: 6px;
+    border: 0;
+
+    float: left;
+}
+#passwd_frame {
+    width: 400px;
+    height: 260px;
+    padding: 13px;
+
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -200px;
+    margin-top: -200px;
+
+    background-color: rgba(240, 255, 255, 0.5);
+
+    border-radius: 10px;
+    text-align: center;
+}
+.label_input {
+    font-size: 14px;
+    font-family: 宋体;
+
+    width: 65px;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+
+    color: white;
+    background-color: #3CD8FF;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.title-passwd{
+    font-size: 14px;
+    font-family: 宋体;
+    margin-left:80px;
+    margin-bottom: 40px;
+    width: 240px;
+    height: 80px;
+    line-height: 28px;
+    text-align: center;
+
+    color: white;
+    background-color: #3CD8FF;
+    /*border-top-left-radius: 5px;*/
+    /*border-bottom-left-radius: 5px;*/
+}
+h2{
+    box-shadow: 5px 5px 5px #888;
+}
