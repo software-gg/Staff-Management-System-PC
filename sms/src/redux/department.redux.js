@@ -16,6 +16,7 @@ const initState = {
 export function department(state = initState, action) {
     switch (action.type) {
         case GET_DEPART_LIST:
+            // console.log("action.departInfo: ", action.departInfo)
             return {
                 departInfo: action.departInfo,
                 msg: ''
@@ -26,6 +27,8 @@ export function department(state = initState, action) {
                 departInfo: state.departInfo.map(v => {
                     if (action._id === v._id)
                         return action.depart;
+                    else
+                        return v;
                 }),
                 msg: ''
             };
@@ -36,6 +39,7 @@ export function department(state = initState, action) {
                 msg: ''
             }
         case INSERT_DEPART:
+            console.log(action);
             return {
                 ...state,
                 departInfo: state.departInfo.concat(action.departs)
@@ -50,8 +54,8 @@ export function department(state = initState, action) {
     }
 }
 
-function getDepartListSync() {
-    return { type: GET_DEPART_LIST };
+function getDepartListSync(departInfo) {
+    return { type: GET_DEPART_LIST, departInfo };
 }
 
 function editDepartSync(_id, depart) {
@@ -70,10 +74,14 @@ function errMsg(msg) {
     return { type: ERROR, msg };
 }
 
-export function getDepartList() {
+export function getDepartList(departName = '') {
     const condition = {};
+    if (departName)
+        condition.departName = departName;
     return dispatch => {
         axios.post(proxy + '/list', condition).then(res => {
+            // console.log(res.data.list);
+            console.log(res);
             if (res.status === 200) {
                 if (res.data.code !== 0)
                     dispatch(errMsg(res.data.msg));
@@ -88,12 +96,12 @@ export function getDepartList() {
     }
 }
 
-export function editDepart(_id, depart) {
+export function editDepart(_id, oldDepart, depart) {
     return dispatch => {
         axios.post(proxy + '/update', {
             _id,
-            departName: depart.departName,
-            director: depart.director
+            oldDepart,
+            depart
         }).then(res => {
             if (res.status === 200) {
                 if (res.data.code !== 0)
@@ -109,16 +117,17 @@ export function editDepart(_id, depart) {
     }
 }
 
-export function deleteDepart(_id) {
+export function deleteDepart(_id, depart) {
     return dispatch => {
         axios.post(proxy + '/delete', {
-            _id
+            _id,
+            depart
         }).then(res => {
             if (res.status === 200) {
                 if (res.data.code !== 0)
                     dispatch(errMsg(res.data.msg));
                 else
-                    dispatch(deleteDepartSync(_id));
+                    dispatch(deleteDepartSync(_id, depart.departName));
             } else {
                 dispatch(errMsg(res.statusText));
             }
@@ -134,10 +143,10 @@ export function insertDepart(depart) {
             depart
         }).then(res => {
             if (res.status === 200) {
-                if (res.data.code !== 0)
-                    dispatch(errMsg(res.data.msg));
-                else
-                    dispatch(insertDepartSync(depart));
+                // if (res.data.code !== 0)
+                //     dispatch(errMsg(res.data.msg));
+                // else
+                    dispatch(insertDepartSync(res.data.list));
             } else {
                 dispatch(errMsg(res.statusText));
             }

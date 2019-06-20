@@ -2,7 +2,7 @@ import axios from "axios";
 
 const GET_ARR = "GET_ARR", INSERT_ARR = "INSERT_ARR";
 const DELETE_ARR = "DELETE_ARR", EDIT_ARR = "EDIT_ARR";
-const TEMP_ARR_ADJUST = 'TEMP_ARR_ADJUST';
+const TEMP_ARR_ADJUST = 'TEMP_ARR_ADJUST', SEARCH = 'SEARCH';
 const FOREVER_ARR_ADJUST = 'FOREVER_ARR_ADJUST';
 const IMPORT_ARR = 'IMPORT_ARR', EXPORT_ARR = 'EXPORT_ARR';
 const ERROR = 'ERROR';
@@ -17,6 +17,7 @@ const initState = {
 export function arrange(state = initState, action) {
     switch (action.type) {
         case GET_ARR:
+        case SEARCH:
             return {
                 arrangeInfo: action.arrangeInfo,
                 msg: ''
@@ -102,6 +103,29 @@ function errMsg(msg) {
     return { type: ERROR, msg };
 }
 
+function searchSync(arrangeInfo) {
+    return { type: SEARCH, arrangeInfo };
+}
+
+export function search(condition) {
+    return dispatch => {
+        console.log(condition)
+        axios.post(proxy + '/list/manager', condition).then(res => {
+            console.log(res);
+            if (res.status === 200) {
+                // if (res.data.code !== 0)
+                //     dispatch(errMsg(res.data.msg));
+                // else
+                dispatch(getArrListSync(res.data.list || []));
+            } else {
+                dispatch(errMsg(res.statusText));
+            }
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+}
+
 export function getArrList(departName = '', month = '') {
     const condition = { month };
     if (departName !== '')
@@ -110,10 +134,10 @@ export function getArrList(departName = '', month = '') {
     return dispatch => {
         axios.post(proxy + '/list/manager', condition).then(res => {
             if (res.status === 200) {
-                if (res.data.code !== 0)
-                    dispatch(errMsg(res.data.msg));
-                else
-                    dispatch(getArrListSync(res.data.list));
+                // if (res.data.code !== 0)
+                //     dispatch(errMsg(res.data.msg));
+                // else
+                dispatch(getArrListSync(res.data.list || []));
             } else {
                 dispatch(errMsg(res.statusText));
             }
@@ -128,12 +152,12 @@ export function insertArr(arrange = []) {
         axios.post(proxy + '/insert', {
             arrange
         }).then(res => {
-            console.log(res)
+            console.log('res:', res);
             if (res.status === 200) {
-                // if (res.data.code !== 0)
-                //     dispatch(errMsg(res.data.msg));
-                // else
-                    dispatch(insertArrSync(arrange));
+                if (res.data.code !== 0)
+                    dispatch(errMsg(res.data.msg));
+                else
+                    dispatch(insertArrSync(res.data.list));
             } else {
                 dispatch(errMsg(res.statusText));
             }

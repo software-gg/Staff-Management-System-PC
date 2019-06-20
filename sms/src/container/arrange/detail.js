@@ -7,8 +7,10 @@ import '../../css/daily.css';
 import '../../css/normalize.css';
 import '../../css/style.css';
 import '../../css/employment.css';
+import { calLastMonth, calNextMonth } from '../../utils/utils'
 import { connect } from 'react-redux';
-import { getArrList, insertArr, deleteArr, editArr } from '../../redux/arrange.redux';
+import { search, getArrList, insertArr, deleteArr, editArr } from '../../redux/arrange.redux';
+import { decoder, colorRender, formatTime } from '../../utils/utils';
 
 // export function getArrList(departName = '', month = '')
 // export function insertArr(arrange = [])
@@ -19,45 +21,78 @@ class ArrangeDetail extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            departName: '业务部',
-            month: '2019-06-01T00:00:00Z',
+            selectList: [],
+            users: [],
+            userList: [],
+            searchName: 'userId',
+            searchValue: '',
+            departName: '',
+            month: '',
             edit: {
                 isEdit: false,
-                id: -1,
+                _id: -1,
                 arrange: {}
             }
         };
     }
 
     componentDidMount() {
-        const { departName, month } = this.state;
+        const { departName } = JSON.parse(sessionStorage.getItem('user'));
+        const users = JSON.parse(sessionStorage.getItem('list')) || [];
+        const current = new Date();
+        console.log(current);
+        const month = current.getFullYear() + '-' + current.getMonth() + '-1';
+        const selectList = ['ordinary', 'extra'];
+        this.setState({
+            users,
+            departName,
+            month,
+            selectList,
+            userList: users.map(v => v.userId)
+        })
+        // console.log(departName, month)
         this.props.getArrList(departName, month);
     }
 
-    handleInsert() {
-        const { departName, month } = this.state;
-        this.props.insertArr([{
-            departName,
-            month,
+    handleAdjust = (checked, arrange) => {
+        checked = checked ? 1 : 0;
+        const newState = {
+            ...arrange,
+            isTemp: checked
+        }
+        this.setState(newState);
+        this.props.editArr(newState._id, newState);
+    }
 
-        }])
+    handleInsert() {
+        const users = this.state.users;
+        const { departName, month } = this.state;
+        this.props.insertArr({
+            departName: departName || '',
+            userId: users[0].userId || '',
+            type: 'ordinary',
+            month,
+        })
         this.setState({
             edit: {
-                isEdit: true,
-                id: this.props.arrange.arrangeInfo.length,
+                isEdit: false,
+                _id: -1,
                 arrange: {
-                    departName,
-                    month
+                    departName: departName || '',
+                    userId: users[0].userId || '',
+                    type: 'ordinary',
+                    month,
+                    isTemp: 0
                 }
             }
         })
     }
 
-    handleEdit(index, arrange) {
+    handleEdit(_id, arrange) {
         this.setState({
             edit: {
                 isEdit: true,
-                id: index,
+                _id: _id,
                 arrange
             }
         })
@@ -70,14 +105,55 @@ class ArrangeDetail extends React.Component {
         this.setState({
             edit: {
                 isEdit: false,
-                id: -1,
+                _id: -1,
                 arrange: {}
             }
         })
     }
 
+    handleLast = () => {
+        const { departName } = this.state;
+        const month = this.state.month;
+        const lastMonth = calLastMonth(month);
+        this.setState({
+            month: lastMonth
+        })
+        this.props.getArrList(departName, lastMonth);
+    }
+
+    handleNext = () => {
+        const { departName } = this.state;
+        const month = this.state.month;
+        const nextMonth = calNextMonth(month);
+        this.setState({
+            month: nextMonth
+        })
+        // console.log(nextMonth);
+        this.props.getArrList(departName, nextMonth);
+    }
+
+    handleSearchChange = (key, val) => {
+        this.setState({
+            [key]: val
+        })
+    }
+
+    handleSearch = () => {
+        // const { departName } = JSON.parse(sessionStorage.getItem('user'));
+        const { month, departName, searchName, searchValue } = this.state;
+        const condition = {
+            departName,
+            month
+        }
+
+        console.log(searchName)
+        if (searchValue !== '')
+            condition[searchName] = searchValue;
+        this.props.search(condition)
+    }
+
     handleChange = (key, val) => {
-        
+
         const newState = {
             edit: {
                 ...this.state.edit,
@@ -87,13 +163,30 @@ class ArrangeDetail extends React.Component {
                 }
             }
         };
-        console.log(newState)
+        // console.log(newState)
         this.setState(newState);
     }
 
     render() {
-        const arrangeInfo = this.props.arrange.arrangeInfo;
+        // const search = this.state.search;
+        const month = this.state.month;
+        const monthArr = month.split('-');
+        const nowYear = monthArr[0], nowMonth = monthArr[1];
+        const arrangeInfo = this.props.arrange.arrangeInfo.map(v => {
+            return {
+                ...v,
+                onTime: formatTime(v.onTime),
+                offTime: formatTime(v.offTime)
+            }
+        }).map(v => {
+            const x = this.state.users.filter(u => u.userId === v.userId);
+            return {
+                ...v,
+                name: x.length >= 1 ? x[0].name : ''
+            }
+        });
         const edit = this.state.edit;
+        // console.log("arrangeInfo: ", arrangeInfo);
         return (
             <div>
                 <Header />
@@ -103,14 +196,13 @@ class ArrangeDetail extends React.Component {
                         细致班次安排
                     </div>
                     <div>
-                        <div>
-                            <input type="text" placeholder="请输入关键字" />
-                            <select name="keyword" id="">
-                                <option className="key">姓名</option>
-                                <option className="key">工号</option>
-                                <option className="key">部门</option>
+                        <div style={{ float: 'right' }}>
+                            <input onChange={(e) => this.handleSearchChange('searchValue', e.target.value)} value={this.state.searchValue} type="text" placeholder="请输入关键字" />
+                            <select onChange={(e) => { console.log(e); this.handleSearchChange('searchName', e.target.value) }} value={this.state.searchName} name="keyword" id="">
+                                <option value="userId" className="key">工号</option>
+                                <option value="departName" className="key">部门</option>
                             </select>
-                            <input type="button" value="查询" className="button" />
+                            <input onClick={this.handleSearch} type="button" value="查询" className="button" />
                         </div>
                     </div>
                     <div className="form">
@@ -118,10 +210,10 @@ class ArrangeDetail extends React.Component {
                             <form action="" className="select2">
                                 <input type="button" onClick={(e) => this.handleInsert()} className='button2' id="2" value="添加工作安排" />
                             </form>
-                            <div className="month">
-                                <a href="" id="last"><i></i></a>
-                                <span >2019年4月</span>
-                                <a href="" id="next"><i></i></a>
+                            <div className="month" style={{ margin: '0 auto' }}>
+                                <a onClick={this.handleLast} id="last"><i></i></a>
+                                <span>{nowYear}年{nowMonth}月</span>
+                                <a onClick={this.handleNext} id="next"><i></i></a>
                             </div>
                             <input type="button" className="button2 right" id="3" value="导入安排" />
                             <input type="button" className="button2 right" id="4" value="导出安排" />
@@ -131,7 +223,7 @@ class ArrangeDetail extends React.Component {
                         <table className="imagetable">
                             <thead>
                                 <tr>
-                                    <th>编号</th><th>员工姓名</th><th>部门</th><th>员工工号</th><th>日期</th><th>上班时间</th><th>下班时间</th><th>状态</th><th>操作</th>
+                                    <th>编号</th><th>员工姓名</th><th>部门</th><th>员工工号</th><th>日期</th><th>上班时间</th><th>下班时间</th><th>状态</th><th>操作</th><th>调整</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -140,36 +232,44 @@ class ArrangeDetail extends React.Component {
                                         return (
                                             <tr key={index}>
                                                 <td>{index + 1}</td>
-                                                <td>{''}</td>
-                                                <td>{arrange.departName}</td>
+                                                <td>{arrange.name}</td>
+                                                <td><EditableItem
+                                                    name='departName'
+                                                    val={arrange.departName || ''}
+                                                    newVal={edit.arrange.departName || ''}
+                                                    isEdit={edit._id === arrange._id}
+                                                    handleChange={this.handleChange}
+                                                /></td>
                                                 <td><EditableItem
                                                     name='userId'
                                                     val={arrange.userId || ''}
                                                     newVal={edit.arrange.userId || ''}
-                                                    isEdit={edit.id === index}
+                                                    isEdit={edit._id === arrange._id}
                                                     handleChange={this.handleChange}
+                                                    selectList={this.state.userList}
                                                 /></td>
-                                                <td>{''}</td>
+                                                <td>{arrange.month}</td>
                                                 <td><EditableItem
                                                     name='onTime'
                                                     val={arrange.onTime || ''}
                                                     newVal={edit.arrange.onTime || ''}
-                                                    isEdit={edit.id === index}
+                                                    isEdit={edit._id === arrange._id}
                                                     handleChange={this.handleChange}
                                                 /></td>
                                                 <td><EditableItem
                                                     name='offTime'
                                                     val={arrange.offTime || ''}
                                                     newVal={edit.arrange.offTime || ''}
-                                                    isEdit={edit.id === index}
+                                                    isEdit={edit._id === arrange._id}
                                                     handleChange={this.handleChange}
                                                 /></td>
                                                 <td><EditableItem
                                                     name='type'
-                                                    val={arrange.type || ''}
+                                                    val={decoder(arrange.type) || ''}
                                                     newVal={edit.arrange.type || ''}
-                                                    isEdit={edit.id === index}
+                                                    isEdit={edit._id === arrange._id}
                                                     handleChange={this.handleChange}
+                                                    selectList={this.state.selectList}
                                                 /></td>
                                                 <td className="operation1">
                                                     {
@@ -178,10 +278,13 @@ class ArrangeDetail extends React.Component {
                                                                 <a onClick={(e) => this.handleComplete(arrange._id)}>完成</a>
                                                             </span>)
                                                             : (<span>
-                                                                <a onClick={(e) => this.handleEdit(index, arrange)}>编辑</a>
+                                                                <a onClick={(e) => this.handleEdit(arrange._id, arrange)}>编辑</a>
                                                                 <a onClick={(e) => this.props.deleteArr(arrange._id)}>删除</a>
                                                             </span>)
                                                     }
+                                                </td>
+                                                <td className="operation1">
+                                                    <input onChange={(e) => this.handleAdjust(e.target.checked, arrange)} checked={arrange.isTemp} type='checkbox' name='isTemp' value='1' />部分调整
                                                 </td>
                                             </tr>
                                         );
@@ -199,12 +302,12 @@ class ArrangeDetail extends React.Component {
                         </div>
                     </div>
                     <PageTurning pageInfo={this.props.pageInfo} />
-                    <div >
+                    {/* <div >
                         <form action="" className="adjust">
-                            <input type="button" value="临时调整" className="button2" />
-                            <input type="button" value="永久调整" className="button3" style={{ backgroundColor: '#b5cfd2' }} />
+                            <input onClick={this.tempAdjust} type="button" value="临时调整" className="button2" />
+                            <input onClick={this.foreverAdjust} type="button" value="永久调整" className="button3" style={{ backgroundColor: '#b5cfd2' }} />
                         </form>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         );
@@ -218,6 +321,7 @@ ArrangeDetail = connect(
         insertArr,
         deleteArr,
         editArr,
+        search
     }
 )(ArrangeDetail);
 

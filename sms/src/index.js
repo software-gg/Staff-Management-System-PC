@@ -47,7 +47,7 @@ ReactDOM.render(
     (<Provider store={store}>
         <BrowserRouter>
             <div>
-                {/* <AuthRoute></AuthRoute> */}
+                <AuthRoute></AuthRoute>
                 <Switch>
                     <Route path='/login' exact component={Login}></Route>
                     <Route path='/apply/detail' exact component={ApplyDetail}></Route>
@@ -60,7 +60,7 @@ ReactDOM.render(
                     <Route path='/employee/check' exact component={EmployeeCheck}></Route>
                     <Route path='/employee/create' exact component={EmployeeCreate}></Route>
                     <Route path='/employee/list' exact component={EmployeeList}></Route>
-                    {/* <Route path='/employee/edit' component={EmployeeEdit}></Route> */}
+                    <Route path='/employee/edit' component={EmployeeEdit}></Route>
                     <Route path='/employee/passwd' exact component={EmployeePasswd}></Route>
                     <Route path='/employee/select' exact component={EmployeeSelect}></Route>
                     <Route path='/message' exact component={Message}></Route>

@@ -7,7 +7,11 @@ import '../../css/normalize.css';
 import '../../css/style.css';
 import '../../css/employment.css';
 import { connect } from 'react-redux';
-import { getApplyList, updateApply } from '../../redux/apply.redux'
+import { getList } from '../../redux/user.redux';
+import { getApplyList, updateApply, insertApply, checkApplyDetail } from '../../redux/apply.redux'
+import { calLastMonth, calNextMonth, formatTime } from '../../utils/utils';
+import { Link } from 'react-router-dom';
+import { decoder, colorRender } from '../../utils/utils';
 
 // getApplyList(departName = '', month = '', type = '')
 
@@ -18,59 +22,95 @@ class ApplyGoldbrick extends React.Component {
         super(props);
         // 数据是写死的
         this.state = {
-            departName: '产品部',
-            month: '2019-06-01 00:00:00',
-            type: '事假'
+            users: [],
+            departName: '',
+            month: ''
         };
     }
 
     componentDidMount() {
-        // const { departName } = this.props.user.userInfo.departName;
-        const { departName, month, type } = this.state;
+        const user = JSON.parse(sessionStorage.getItem('user')) || {};
+
+        // if (user) {
+        //     const userInfo = user;
+        //     console.log(userInfo)
+        //     if (userInfo.type === 'director')
+        //         this.props.getList(userInfo.departName);
+        //     else
+        //         this.props.getList('');
+        // }
+        const users = JSON.parse(sessionStorage.getItem('list')) || [];
+        const { departName } = user;
+        const current = new Date();
+        // const month = current.getFullYear() + '-' + current.getMonth() + '-1';
+        // const { departName, month } = this.state;
         this.setState({
-            departName
+            users,
+            departName,
+            // month
         })
-        this.props.getApplyList(departName, month, type);
+        // console.log(departName, '')
+        this.props.getApplyList(departName, '', '事假');
+        this.props.insertApply(departName, '', '病假');
     }
 
     render() {
-        const applyInfo = this.props.apply.applyInfo;
-        console.log(applyInfo);
+        var applyInfo;
+        // console.log(this.state.users)
+        // if (this.state.users) {
+        applyInfo = this.props.apply.applyInfo.map(v => {
+            return {
+                ...v,
+                startTime: formatTime(v.startTime),
+                endTime: formatTime(v.endTime),
+                sentTime: formatTime(v.sentTime)
+            }
+        }).map(v => {
+            const x = this.state.users.filter(u => u.userId === v.userId)
+            return {
+                ...v,
+                name: x.length >= 1 ? x[0].name : ''
+            }
+        });
+        // }
+
+        // console.log(this.state.users.filter(u => u.userId === '41621302')[0])
+        // console.log(applyInfo);
         return (
             <div>
                 <Header />
                 <DirectorNav />
                 <div className='main'>
                     <div className='title3'>
-                        申请信息列表
+                        请假申请列表
                     </div>
-                    <div>
-                        <form action="" className="select clearfix">
-                            <input type="text" placeholder="请输入关键字" />
-                            <select name="keyword" id="">
-                                <option className="key">姓名</option>
-                                <option className="key">工号</option>
-                                <option className="key">部门</option>
-                            </select>
-                            <input type="button" value="查询" className="button" />
-                        </form>
+                    <div style={{ float: 'right' }}>
+                        {/* <form action="" className="select clearfix"> */}
+                        <input type="text" placeholder="请输入关键字" />
+                        <select name="keyword" id="">
+                            <option className="key">姓名</option>
+                            <option className="key">工号</option>
+                            <option className="key">部门</option>
+                        </select>
+                        <input type="button" value="查询" className="button" />
+                        {/* </form> */}
                     </div>
                     <div className="form">
                         <div className="title4">
-                            <form action="">
+                            {/* <form action="">
                                 <input type="button" className="button2 right" id="3" value="批量通过" />
                                 <input type="button" className="button2 right" id="4" value="批量回绝" />
-                            </form>
+                            </form> */}
                         </div>
                     </div>
                     <div className='content'>
                         <table className="imagetable">
                             <thead>
                                 <tr>
-                                    <th>
+                                    {/* <th>
                                         <input type="checkbox" />
-                                    </th>
-                                    <th>编号</th><th>员工姓名</th><th>部门</th><th>员工工号</th><th>申请性质</th><th>开始时间</th><th>结束时间</th><th>状态</th><th>操作</th>
+                                    </th> */}
+                                    <th>编号</th><th>员工姓名</th><th>部门</th><th>员工工号</th><th>申请性质</th><th>申请时间</th><th>开始时间</th><th>结束时间</th><th>状态</th><th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -78,19 +118,20 @@ class ApplyGoldbrick extends React.Component {
                                     applyInfo.map((apply, index) => {
                                         return (
                                             <tr key={index}>
-                                                <td>
+                                                {/* <td>
                                                     <input type="checkbox" />
-                                                </td>
+                                                </td> */}
                                                 <td>{index + 1}</td>
-                                                <td>{''}</td>
+                                                <td>{apply.name}</td>
                                                 <td>{apply.departName}</td>
                                                 <td>{apply.userId}</td>
                                                 <td>{apply.type}</td>
+                                                <td>{apply.sentTime}</td>
                                                 <td>{apply.startTime}</td>
                                                 <td>{apply.endTime}</td>
-                                                <td className="red">{apply.state}</td>
+                                                <td className={colorRender(apply.state)}>{decoder(apply.state)}</td>
                                                 <td className="operation1">
-                                                    <a href="/apply/detail">详情</a>
+                                                    <Link onClick={(e) => this.props.checkApplyDetail(apply)} to="/apply/detail">详情</Link>
                                                     {
                                                         apply.state === 'wait'
                                                             ? (<span>
@@ -99,8 +140,6 @@ class ApplyGoldbrick extends React.Component {
                                                             </span>)
                                                             : <a onClick={(e) => this.props.updateApply(apply._id, 'wait')}>撤销</a>
                                                     }
-
-
                                                 </td>
                                             </tr>
                                         );
@@ -169,6 +208,9 @@ ApplyGoldbrick = connect(
     {
         getApplyList,
         updateApply,
+        insertApply,
+        getList,
+        checkApplyDetail
     }
 )(ApplyGoldbrick);
 

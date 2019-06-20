@@ -6,17 +6,26 @@ import '../../css/employment.css';
 import { Link } from 'react-router-dom';
 
 class DirectorNav extends React.Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    logout = () => {
+        sessionStorage.clear();
+    }
+
     render() {
         return (
             <div className="nav">
-                <dl>
+                {/* <dl>
                     <dt>
                         <Link to='/'>
                             <i></i>
                             <div className="title2">首页</div>
                         </Link>
                     </dt>
-                </dl>
+                </dl> */}
                 <dl>
                     <dt>
                         <i></i>
@@ -69,33 +78,47 @@ class DirectorNav extends React.Component {
                         </Link>
                     </dt>
                 </dl>
-                <dl>
+                {/* <dl>
                     <dt>
                         <Link to='/'>
                             <i></i>
                             <div className="title2">薪酬统计</div>
                         </Link>
                     </dt>
+                </dl> */}
+                <dl>
+                    <dt>
+                        <i></i>
+                            <div className="title2">人员管理</div>
+                    </dt>
                 </dl>
                 <dl>
                     <dt>
                         <Link to='/employee/list'>
-                            <i></i>
+                            <i></i>
                             <div className="title2">员工管理</div>
                         </Link>
                     </dt>
                 </dl>
                 <dl>
                     <dt>
+                        <Link to='/department'>
+                            <i></i>
+                            <div className="title2">部门管理</div>
+                        </Link>
+                    </dt>
+                </dl>
+                {/* <dl>
+                    <dt>
                         <Link to='/employee/check'>
                             <i></i>
                             <div className="title2">用户管理</div>
                         </Link>
                     </dt>
-                </dl>
+                </dl> */}
                 <dl>
                     <dt>
-                        <Link to='/login'>
+                        <Link onClick={this.logout} to='/login'>
                             <i></i>
                             <div className="title2">安全退出</div>
                         </Link>

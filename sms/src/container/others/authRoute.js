@@ -1,17 +1,19 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+// import { getList } from '../../redux/user.redux';
 
 class AuthRoute extends React.Component {
     constructor(props) {
         super(props);
     }
-
+    
     render() {
+        // console.log(this.props.user.isAuth);
         return (
             <div>
                 {
-                    this.props.user.isAuth
+                    sessionStorage.getItem('user')
                         ? null
                         : <Redirect to='/login' />
                 }

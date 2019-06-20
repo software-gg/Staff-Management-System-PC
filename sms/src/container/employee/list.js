@@ -8,13 +8,15 @@ import '../../css/style.css';
 import '../../css/money.css';
 import '../../css/employment.css';
 import { connect } from 'react-redux';
-import { getList } from '../../redux/user.redux';
+import { getList, getEmployee, importUsers, exportUsers, deleteUser } from '../../redux/user.redux';
+import { Link } from 'react-router-dom';
+import { decoder } from '../../utils/utils';
 
 class EmployeeList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            departName: '业务部',
+            departName: '',
             edit: {
                 isEdit: false,
                 id: -1,
@@ -24,14 +26,31 @@ class EmployeeList extends React.Component {
     }
 
     componentDidMount() {
-        const departName = this.state.departName;
+        var departName = '';
+        const userInfo = JSON.parse(sessionStorage.getItem('user'));
+        if (userInfo.type === 'director')
+            departName = userInfo.departName;
+        this.setState({
+            departName
+        })
         this.props.getList(departName);
     }
 
+    handleImport = () => {
+        const departName = this.state.departName;
+        this.props.importUsers(departName);
+    }
+
+    handleExport = () => {
+        const departName = this.state.departName;
+        this.props.exportUsers(departName);
+        console.log(this.props.user.userList);
+    }
+
     render() {
-        console.log(this.props.user.userList)
+        // console.log(this.props.user.userList)
         const userList = this.props.user.userList;
-        
+
         return (
             <div>
                 <Header />
@@ -40,11 +59,27 @@ class EmployeeList extends React.Component {
                     <div className='title3'>
                         员工信息列表
                     </div>
+
+                    <div className="form">
+                        {
+                            this.state.departName === ''
+                                ? <div className="title4">
+                                    <form action="" className="select2">
+                                        <Link to='/employee/create'>
+                                            <input type="button" className='button2' id="2" value="添加员工" />
+                                        </Link>
+                                    </form>
+                                    <input onClick={this.handleImport} type="button" className="button2 right" id="3" value="导入员工" />
+                                    <input onClick={this.handleExport} type="button" className="button2 right" id="4" value="导出员工" />
+                                </div>
+                                : null
+                        }
+                    </div>
                     <div className='content'>
-                        <table className="imagetable" style={{ marginTop: '-70px' }}>
+                        <table className="imagetable">
                             <thead>
                                 <tr>
-                                    <th>编号</th><th>员工姓名</th><th>部门</th><th>员工工号</th><th>初始密码</th><th>手机号码</th><th>创建日期</th><th>状态</th><th>身份</th><th>操作</th>
+                                    <th>编号</th><th>员工姓名</th><th>部门</th><th>员工工号</th><th>初始密码</th><th>手机号码</th><th>身份</th><th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,12 +93,19 @@ class EmployeeList extends React.Component {
                                                 <td>{user.userId}</td>
                                                 <td>{user.initPwd}</td>
                                                 <td>{user.phone}</td>
-                                                <td>{''}</td>
-                                                <td>{'正常'}</td>
-                                                <td>{user.type}</td>
+                                                {/* <td>{'正常'}</td> */}
+                                                <td>{decoder(user.type)}</td>
                                                 <td className="operation1">
-                                                    <a href='/employee/check'>查看</a>
-                                                    <a href='/employee/create'>编辑</a>
+                                                    <Link onClick={(e) => this.props.getEmployee(user._id)} to='/employee/check'>查看</Link>
+                                                    {
+                                                        this.state.departName === ''
+                                                            ? <span>
+                                                                <Link onClick={(e) => this.props.getEmployee(user._id)} to='/employee/edit'>编辑</Link>
+                                                                <a onClick={(e) => this.props.deleteUser(user._id)}>删除</a>
+                                                            </span>
+                                                            : null
+                                                    }
+
                                                 </td>
                                             </tr>
                                         );
@@ -74,12 +116,12 @@ class EmployeeList extends React.Component {
                         <div className="num">总共有<span id="num" style={{ color: 'orangered' }}>{userList.length}</span>条记录</div>
                     </div>
                     <PageTurning pageInfo={this.props.pageInfo} />
-                    <div style={{ bottom: '50px' }}>
+                    {/* <div style={{ bottom: '50px' }}>
                         <form action="" className="adjust" >
                             <input type="button" value="保存" className="button2" />
                             <input type="button" value="取消" className="button2" style={{ backgroundColor: '#b5cfd2' }} />
                         </form>
-                    </div>
+                    </div> */}
                 </div>
 
             </div>
@@ -90,7 +132,11 @@ class EmployeeList extends React.Component {
 EmployeeList = connect(
     state => state,
     {
-        getList
+        getList,
+        getEmployee,
+        importUsers,
+        exportUsers,
+        deleteUser
     }
 )(EmployeeList);
 

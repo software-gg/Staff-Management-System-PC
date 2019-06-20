@@ -27,7 +27,7 @@ class PageTurning extends React.Component {
                     <li><input type="button" value="9" className="button3" id="i" /></li>
                     <li><input type="button" value="..." className="button3" id="j" /></li>
                     <li><button></button></li>
-                    <li style={{ marginLeft: '30px' }}>共<span id='k'>200</span>页</li>
+                    <li style={{ marginLeft: '30px' }}>共<span id='k'>1</span>页</li>
                     <li>第<span id='l'>1</span>页</li>
                 </ul>
             </div>

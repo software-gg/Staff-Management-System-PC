@@ -5,11 +5,12 @@ const CHANGE_PASSWD = 'CHNAGE_PASSWD', INSERT_USERS = 'INSERT_USERS';
 const DELETE_USERS = 'DELETE_USERS', LOGIN = 'LOGIN', LOGOUT = 'LOGOUT';
 const UPDATE_USERS = 'UPDATE_USERS';
 const IMPORT_USERS = 'IMPORT_USERS', EXPORT_USERS = 'EXPORT_USERS';
-const ERROR = 'ERROR';
+const ERROR = 'ERROR', GET_EMPLOYEE = 'GET_EMPLOYEE';
 const proxy = '/user';
 
 const initState = {
     userInfo: {},
+    employee: {},
     userList: [],
     isAuth: false,
     msg: '',
@@ -33,7 +34,7 @@ export function users(state = initState, action) {
         case DELETE_USERS:
             return {
                 ...state,
-                userList: state.userList.filter(user => user.userId !== action.userId),
+                userList: state.userList.filter(user => user._id !== action._id),
                 msg: ''
             };
         case CHANGE_INFO:
@@ -77,6 +78,13 @@ export function users(state = initState, action) {
                         return v;
                 })
             }
+        case GET_EMPLOYEE:
+            return {
+                ...state,
+                employee: state.userList.filter(user => {
+                    return user._id === action._id;
+                })[0]
+            }
         case ERROR:
             return {
                 ...state,
@@ -95,8 +103,8 @@ export function insertUsersSync(userList = []) {
     return { type: INSERT_USERS, userList };
 }
 
-export function deleteUserSync(userId = '') {
-    return { type: DELETE_USERS, userId };
+export function deleteUserSync(_id = '') {
+    return { type: DELETE_USERS, _id };
 }
 
 export function changeInfoSync(userInfo = {}) {
@@ -121,22 +129,30 @@ export function errMsg(msg = '') {
 
 // 异步获取用户列表
 export function getList(departName = '') {
+    // console.log(departName)
     return dispatch => {
         axios.get(proxy + '/list', {
             params: {
                 departName
             }
         }).then(res => {
+            console.log('getList:', res);
             if (res.status === 200) {
                 if (res.data.code !== 0)
                     dispatch(errMsg(res.data.msg));
-                else
+                else {
                     dispatch(getListSync(res.data.list));
+                    sessionStorage.setItem('list', JSON.stringify(res.data.list));
+                }
             }
         }).catch(err => {
             console.log(err);
         })
     }
+}
+// 通过_id获取用户信息
+export function getEmployee(_id) {
+    return { type: GET_EMPLOYEE, _id };
 }
 // 异步插入用户
 export function insertUsers(userList) {
@@ -156,16 +172,16 @@ export function insertUsers(userList) {
     }
 }
 // 异步删除用户（只能删除一个）
-export function deleteUser(userId) {
+export function deleteUser(_id) {
     return dispatch => {
         axios.post(proxy + '/delete', {
-            userId
+            _id
         }).then(res => {
             if (res.status === 200) {
                 if (res.data.code !== 0)
                     dispatch(errMsg(res.data.msg));
                 else
-                    dispatch(deleteUserSync(userId));
+                    dispatch(deleteUserSync(_id));
             } else {
                 console.log(res.statusText);
             }
@@ -252,12 +268,52 @@ export function login({ type, userId, pwd, valCode, inputValCode }) {
             userId,
             pwd
         }).then(res => {
-            console.log(res)
+            // console.log(res)
             if (res.status === 200) {
                 if (res.data.code !== 0)
                     dispatch(errMsg(res.data.msg));
-                else
+                else {
                     dispatch(loginSync(res.data.list));
+
+                    // getList(res.data.list.departName);
+                    const departName = res.data.list.departName || ''
+
+                    // 为了将用户登录和获取部门主管或经理的用户列表这两个功能进行同步
+                    axios.get(proxy + '/list', {
+                        params: {
+                            departName
+                        }
+                    }).then(result => {
+                        // console.log('getList:', result);
+                        if (result.status === 200) {
+                            if (result.data.code !== 0)
+                                dispatch(errMsg(result.data.msg));
+                            else {
+                                dispatch(getListSync(result.data.list));
+                                sessionStorage.setItem('list', JSON.stringify(result.data.list));
+                                sessionStorage.setItem('user', JSON.stringify(res.data.list))
+                            }
+                        }
+                    }).catch(err => {
+                        console.log(err);
+                    })
+
+                    
+                    axios.post('/department/list', {
+                        departName
+                    }).then(result => {
+                        // console.log('getList:', result);
+                        if (result.status === 200) {
+                            if (result.data.code !== 0)
+                                dispatch(errMsg(result.data.msg));
+                            else {
+                                sessionStorage.setItem('department', JSON.stringify(result.data.list))
+                            }
+                        }
+                    }).catch(err => {
+                        console.log(err);
+                    })
+                }
             } else {
                 console.log(res.statusText);
             }
@@ -297,6 +353,7 @@ export function importUsers(departName = '') {
 
     return dispatch => {
         axios.post(proxy + '/import/1', condition).then(res => {
+            console.log(res);
             if (res.status === 200) {
                 if (res.data.code !== 0)
                     dispatch(errMsg(res.data.msg));

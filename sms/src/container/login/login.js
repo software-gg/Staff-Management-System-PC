@@ -3,7 +3,7 @@ import '../../css/normalize.css';
 import '../../css/login.css';
 import { shuffle } from '../../utils/utils';
 import { connect } from 'react-redux';
-import { login } from '../../redux/user.redux';
+import { login, logout, getList } from '../../redux/user.redux';
 import { Redirect } from 'react-router-dom';
 
 // @connect(state => state.user, { login })
@@ -23,6 +23,7 @@ class Login extends React.Component {
     }
 
     componentDidMount() {
+        this.props.logout();
         this.create_code();
     }
 
@@ -34,7 +35,7 @@ class Login extends React.Component {
         for (var i = 0; i < 6; i++) {
             ar1 += code[i];
         }
-        console.log(ar1);
+        // console.log(ar1);
         this.setState({
             valCode: ar1
         })
@@ -55,12 +56,12 @@ class Login extends React.Component {
         return (
             <div className="container">
                 {
-                    this.props.user.isAuth
-                        ? <Redirect to='/apply/detail'></Redirect>
+                    sessionStorage.getItem('user') || this.props.user.isAuth
+                        ? <Redirect to='/apply/goldbrick'></Redirect>
                         : null
                 }
-                <div className='title'>
-                    <h2>员工考勤后台管理系统</h2>
+                <div>
+                    <h2 className='title-login'>员工考勤后台管理系统</h2>
                 </div>
                 <div className="form">
                     <p id='mark'>{this.props.user.msg}</p>
@@ -101,7 +102,9 @@ class Login extends React.Component {
 }
 const mapStateToProps = state => state;
 const mapDispatchToProps = {
-    login
+    login,
+    logout,
+    getList
 }
 
 Login = connect(
