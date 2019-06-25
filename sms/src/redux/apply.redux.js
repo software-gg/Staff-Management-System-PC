@@ -15,7 +15,7 @@ const initState = {
 export function apply(state = initState, action) {
     switch (action.type) {
         case CHECK_DETAIL:
-            console.log('action.apply:', action.apply)
+            // console.log('action.apply:', action.apply)
             return {
                 ...state,
                 detail: action.apply
@@ -97,7 +97,7 @@ export function getApplyList(departName = '', month = '', type = '') {
 }
 
 export function updateApply(_id = '', state = '') {
-    console.log(_id, state);
+    // console.log(_id, state);
     return dispatch => {
         Axios.post(proxy + '/update', {
             _id,
@@ -119,7 +119,7 @@ export function updateApply(_id = '', state = '') {
 }
 
 export function insertApply(departName = '', month = '', type = '') {
-    console.log('month: ', month);
+    // console.log('month: ', month);
     return dispatch => {
         Axios.post(proxy + '/list', {
             departName,

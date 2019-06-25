@@ -27,7 +27,7 @@ export function allArrange(state = initState, action) {
         //     nextState.allArrangeInfo.isTemp = 0;
         // return nextState;
         case INSERT_ALLARR:
-            console.log("action.allArrangeInfo: ", action.allArrangeInfo)
+            // console.log("action.allArrangeInfo: ", action.allArrangeInfo)
             return {
                 ...state,
                 allArrangeInfo: state.allArrangeInfo.concat(action.allArrangeInfo)
@@ -42,7 +42,7 @@ export function allArrange(state = initState, action) {
                 else
                     return v;
             })
-            console.log(nextState);
+            // console.log(nextState);
             return nextState;
         case DELETE_ALLARR:
             nextState.allArrangeInfo = state.allArrangeInfo.filter(v => {
@@ -88,10 +88,10 @@ function searchSync(allArrangeInfo) {
 }
 
 export function search(condition) {
-    console.log(condition)
+    // console.log(condition)
     return dispatch => {
         axios.post(proxy + '/list', condition).then(res => {
-            console.log(res);
+            // console.log(res);
             if (res.status === 200) {
                 if (res.data.code === 1) {
                     dispatch(errMsg(res.data.msg));
@@ -112,12 +112,12 @@ export function getAllArr(departName, month) {
         postData.departName = departName;
     return dispatch => {
         axios.post(proxy + '/list', postData).then(res => {
-            console.log(res.data.list);
+            // console.log(res.data.list);
             if (res.status === 200) {
                 if (res.data.code === 1) {
                     dispatch(errMsg(res.data.msg));
                 } else {
-                    dispatch(getAllArrSync(res.data.list))
+                    dispatch(getAllArrSync(res.data.list || []))
                 }
             } else {
                 dispatch(errMsg(res.statusText));
@@ -132,7 +132,7 @@ export function insertAllArr(allArrangeInfo) {
         axios.post(proxy + '/insert', {
             allArrange: allArrangeInfo
         }).then(res => {
-            console.log(res);
+            // console.log(res);
             if (res.status === 200) {
                 if (res.data.code !== 0) {
                     dispatch(errMsg(res.data.msg));

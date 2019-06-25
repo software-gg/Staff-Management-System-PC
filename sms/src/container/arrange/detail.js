@@ -28,6 +28,8 @@ class ArrangeDetail extends React.Component {
             searchValue: '',
             departName: '',
             month: '',
+            importPath: '',
+            exportPath: '',
             edit: {
                 isEdit: false,
                 _id: -1,
@@ -37,7 +39,7 @@ class ArrangeDetail extends React.Component {
     }
 
     componentDidMount() {
-        const { departName } = JSON.parse(sessionStorage.getItem('user'));
+        const { departName } = JSON.parse(sessionStorage.getItem('user')) || '';
         const users = JSON.parse(sessionStorage.getItem('list')) || [];
         const current = new Date();
         console.log(current);
@@ -48,7 +50,9 @@ class ArrangeDetail extends React.Component {
             departName,
             month,
             selectList,
-            userList: users.map(v => v.userId)
+            userList: users.map(v => v.userId),
+            importPath: sessionStorage.getItem('proxy') + `/arrange/import/1`,
+            exportPath: sessionStorage.getItem('proxy') + `/arrange/export/1?departName=${departName}&month=${month}`
         })
         // console.log(departName, month)
         this.props.getArrList(departName, month);
@@ -116,7 +120,8 @@ class ArrangeDetail extends React.Component {
         const month = this.state.month;
         const lastMonth = calLastMonth(month);
         this.setState({
-            month: lastMonth
+            month: lastMonth,
+            exportPath: sessionStorage.getItem('proxy') + `/arrange/export/1?departName=${departName}&month=${lastMonth}`
         })
         this.props.getArrList(departName, lastMonth);
     }
@@ -126,7 +131,8 @@ class ArrangeDetail extends React.Component {
         const month = this.state.month;
         const nextMonth = calNextMonth(month);
         this.setState({
-            month: nextMonth
+            month: nextMonth,
+            exportPath: sessionStorage.getItem('proxy') + `/arrange/export/1?departName=${departName}&month=${nextMonth}`
         })
         // console.log(nextMonth);
         this.props.getArrList(departName, nextMonth);
@@ -146,14 +152,13 @@ class ArrangeDetail extends React.Component {
             month
         }
 
-        console.log(searchName)
+        // console.log(searchName)
         if (searchValue !== '')
             condition[searchName] = searchValue;
         this.props.search(condition)
     }
 
     handleChange = (key, val) => {
-
         const newState = {
             edit: {
                 ...this.state.edit,
@@ -165,6 +170,10 @@ class ArrangeDetail extends React.Component {
         };
         // console.log(newState)
         this.setState(newState);
+    }
+
+    handleExport = () => {
+        window.location.href = this.state.exportPath
     }
 
     render() {
@@ -198,7 +207,7 @@ class ArrangeDetail extends React.Component {
                     <div>
                         <div style={{ float: 'right' }}>
                             <input onChange={(e) => this.handleSearchChange('searchValue', e.target.value)} value={this.state.searchValue} type="text" placeholder="请输入关键字" />
-                            <select onChange={(e) => { console.log(e); this.handleSearchChange('searchName', e.target.value) }} value={this.state.searchName} name="keyword" id="">
+                            <select onChange={(e) => { this.handleSearchChange('searchName', e.target.value) }} value={this.state.searchName} name="keyword" id="">
                                 <option value="userId" className="key">工号</option>
                                 <option value="departName" className="key">部门</option>
                             </select>
@@ -207,7 +216,7 @@ class ArrangeDetail extends React.Component {
                     </div>
                     <div className="form">
                         <div className="title4">
-                            <form action="" className="select2">
+                            <form className="select2">
                                 <input type="button" onClick={(e) => this.handleInsert()} className='button2' id="2" value="添加工作安排" />
                             </form>
                             <div className="month" style={{ margin: '0 auto' }}>
@@ -215,8 +224,13 @@ class ArrangeDetail extends React.Component {
                                 <span>{nowYear}年{nowMonth}月</span>
                                 <a onClick={this.handleNext} id="next"><i></i></a>
                             </div>
-                            <input type="button" className="button2 right" id="3" value="导入安排" />
-                            <input type="button" className="button2 right" id="4" value="导出安排" />
+                            <input onClick={this.handleExport} type="button" className="button2 right" id="4" value="导出安排" />
+                            <form method='post' className='right' action={this.state.importPath} enctype="multipart/form-data">
+                                <input name='arrangeList' type="file" id="3" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+                                <input name='departName' value={this.state.departName} type='text' hidden />
+                                <input name='month' value={this.state.month} type='text' hidden />
+                                <input type="submit" className="button2" id="3" value="导入安排" />
+                            </form>
                         </div>
                     </div>
                     <div className='content'>

@@ -14,6 +14,7 @@ const initState = {
     userList: [],
     isAuth: false,
     msg: '',
+    path: '',
     pageInfo: {}
 }
 
@@ -66,6 +67,7 @@ export function users(state = initState, action) {
         case EXPORT_USERS:
             return {
                 ...state,
+                path: action.path,
                 msg: ''
             };
         case UPDATE_USERS:
@@ -103,8 +105,8 @@ export function insertUsersSync(userList = []) {
     return { type: INSERT_USERS, userList };
 }
 
-export function deleteUserSync(_id = '') {
-    return { type: DELETE_USERS, _id };
+export function deleteUserSync(_id = '', userId = '') {
+    return { type: DELETE_USERS, _id, userId };
 }
 
 export function changeInfoSync(userInfo = {}) {
@@ -127,6 +129,10 @@ export function errMsg(msg = '') {
     return { type: ERROR, msg };
 }
 
+export function exportUsersSync(path) {
+    return { type: EXPORT_USERS, path };
+}
+
 // 异步获取用户列表
 export function getList(departName = '') {
     // console.log(departName)
@@ -136,12 +142,12 @@ export function getList(departName = '') {
                 departName
             }
         }).then(res => {
-            console.log('getList:', res);
+            // console.log('getList:', res);
             if (res.status === 200) {
                 if (res.data.code !== 0)
                     dispatch(errMsg(res.data.msg));
                 else {
-                    dispatch(getListSync(res.data.list));
+                    dispatch(getListSync(res.data.list || []));
                     sessionStorage.setItem('list', JSON.stringify(res.data.list));
                 }
             }
@@ -172,16 +178,17 @@ export function insertUsers(userList) {
     }
 }
 // 异步删除用户（只能删除一个）
-export function deleteUser(_id) {
+export function deleteUser(_id, userId) {
     return dispatch => {
         axios.post(proxy + '/delete', {
-            _id
+            _id,
+            userId
         }).then(res => {
             if (res.status === 200) {
                 if (res.data.code !== 0)
                     dispatch(errMsg(res.data.msg));
                 else
-                    dispatch(deleteUserSync(_id));
+                    dispatch(deleteUserSync(_id, userId));
             } else {
                 console.log(res.statusText);
             }
@@ -292,13 +299,14 @@ export function login({ type, userId, pwd, valCode, inputValCode }) {
                                 dispatch(getListSync(result.data.list));
                                 sessionStorage.setItem('list', JSON.stringify(result.data.list));
                                 sessionStorage.setItem('user', JSON.stringify(res.data.list))
+                                sessionStorage.setItem('proxy', 'http://localhost:9093');
                             }
                         }
                     }).catch(err => {
                         console.log(err);
                     })
 
-                    
+
                     axios.post('/department/list', {
                         departName
                     }).then(result => {
@@ -327,43 +335,49 @@ export function logout(msg = '') {
     return { type: LOGOUT, msg };
 }
 // 导出用户列表
-export function exportUsers(departName = '') {
-    const condition = {};
-    if (departName !== '')
-        condition.departName = departName;
+// export function exportUsers(departName = '') {
+//     // const condition = {};
+//     // if (departName !== '')
+//     //     condition.departName = departName;
 
-    return dispatch => {
-        axios.post(proxy + '/export/1', condition).then(res => {
-            if (res.status === 200) {
-                if (res.data.code !== 0)
-                    dispatch(errMsg(res.data.msg));
-            } else {
-                console.log(res.statusText);
-            }
-        }).catch(err => {
-            console.log(err);
-        })
-    }
-}
+//     return dispatch => {
+//         axios.get(proxy + '/export/1', {
+//             params: condition
+//         }).then(res => {
+//             if (res.status === 200) {
+//                 if (res.data.code !== 0)
+//                     dispatch(errMsg(res.data.msg));
+//                 else {
+//                     // dispatch(exportUsersSync('http://localhost:9093/' + res.data.path))
+                    
+//                 }
+//             } else {
+//                 console.log(res.statusText);
+//             }
+//         }).catch(err => {
+//             console.log(err);
+//         })
+//     }
+// }
 // 导入用户列表
-export function importUsers(departName = '') {
-    const condition = {};
-    if (departName !== '')
-        condition.departName = departName;
+// export function importUsers(departName = '') {
+//     const condition = {};
+//     if (departName !== '')
+//         condition.departName = departName;
 
-    return dispatch => {
-        axios.post(proxy + '/import/1', condition).then(res => {
-            console.log(res);
-            if (res.status === 200) {
-                if (res.data.code !== 0)
-                    dispatch(errMsg(res.data.msg));
-                else
-                    dispatch(insertUsersSync(res.data.list));
-            } else {
-                console.log(res.statusText);
-            }
-        }).catch(err => {
-            console.log(err);
-        })
-    }
-}
+//     return dispatch => {
+//         axios.post(proxy + '/import/1', condition).then(res => {
+//             console.log(res);
+//             if (res.status === 200) {
+//                 if (res.data.code !== 0)
+//                     dispatch(errMsg(res.data.msg));
+//                 else
+//                     dispatch(insertUsersSync(res.data.list));
+//             } else {
+//                 console.log(res.statusText);
+//             }
+//         }).catch(err => {
+//             console.log(err);
+//         })
+//     }
+// }

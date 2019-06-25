@@ -23,10 +23,10 @@ class EmployeeSelect extends React.Component {
 
         const users = JSON.parse(sessionStorage.getItem('list'));
         const selectedUsers = this.props.allArrange.edition.users || [];
-        console.log(selectedUsers)
+        // console.log(selectedUsers)
         const idList = selectedUsers.map(v => v._id || v[0]._id);
-        console.log(selectedUsers);
-        console.log(idList);
+        // console.log(selectedUsers);
+        // console.log(idList);
         this.setState({
             users: users.map(v => {
                 return {

@@ -39,7 +39,7 @@ export function department(state = initState, action) {
                 msg: ''
             }
         case INSERT_DEPART:
-            console.log(action);
+            // console.log(action);
             return {
                 ...state,
                 departInfo: state.departInfo.concat(action.departs)
@@ -81,7 +81,7 @@ export function getDepartList(departName = '') {
     return dispatch => {
         axios.post(proxy + '/list', condition).then(res => {
             // console.log(res.data.list);
-            console.log(res);
+            // console.log(res);
             if (res.status === 200) {
                 if (res.data.code !== 0)
                     dispatch(errMsg(res.data.msg));

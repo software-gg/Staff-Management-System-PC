@@ -53,3 +53,23 @@ export function getDepartList(userId) {
         })
     }
 }
+
+export function deleteMsg(_id) {
+    return dispatch => {
+        axios.post(proxy + '/delete', {
+            _id
+        }).then(res => {
+            if (res.status === 200) {
+                if (res.data.code !== 0)
+                    dispatch(errMsg(res.data.msg));
+                else
+                    ;
+                    // dispatch(getMsgListSync(res.data.list));
+            } else {
+                dispatch(errMsg(res.statusText));
+            }
+        }).catch(err => {
+            console.log(err);
+        })
+    }
+}

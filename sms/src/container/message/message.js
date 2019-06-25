@@ -6,7 +6,7 @@ import '../../css/normalize.css';
 import '../../css/style.css';
 import '../../css//money.css';
 import { connect } from 'react-redux';
-import { getDepartList } from '../../redux/message.redux';
+import { getDepartList, deleteMsg } from '../../redux/message.redux';
 import { Link } from 'react-router-dom';
 import { formatTime } from '../../utils/utils';
 // import linker from '../../component/decorator/linker';
@@ -20,7 +20,7 @@ class Message extends React.Component {
     componentDidMount() {
         const { userId } = JSON.parse(sessionStorage.getItem('user'));
         this.props.getDepartList(userId);
-        console.log(userId)
+        // console.log(userId)
     }
 
     generateURL = (type) => {
@@ -58,7 +58,7 @@ class Message extends React.Component {
                                         <legend>
                                             <b>{msg.title}</b>
                                         </legend>
-                                        <Link style={{ textDecoration: 'none' }} to={this.generateURL(msg.type)}>
+                                        <Link onClick={(e) => this.props.deleteMsg(msg._id)} style={{ textDecoration: 'none' }} to={this.generateURL(msg.type)}>
                                             <div style={{ fontSize: '15px', textDecoration: 'none' }}>
                                                 {msg.tag}
                                             </div>
@@ -148,7 +148,8 @@ class Message extends React.Component {
 Message = connect(
     state => state,
     {
-        getDepartList
+        getDepartList,
+        deleteMsg
     }
 )(Message)
 

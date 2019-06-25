@@ -22,9 +22,14 @@ class Header extends React.Component {
         return (
             <div className='title'>
                 <div className='left'><a>员工考勤</a>管理后台</div>
-                <br /><br />
                 <div className="right">
-                    {/* <div className="mess-num"><a>5</a></div> */}
+                    {
+                        this.props.msgCount === 0
+                            ? <span>
+                                <br /> <br />
+                                </span>
+                            : <div className="mess-num"><a>{this.props.msgCount}</a></div>
+                    }
                     <Link to='/message'>
                         <i></i>
                         <div className="message">系统消息</div>
@@ -38,13 +43,5 @@ class Header extends React.Component {
         );
     }
 }
-
-// 错误！！！为什么？
-// Header = connect(
-//     state=>state,
-//     {
-//         getEmployee
-//     }
-// )
 
 export default Header;

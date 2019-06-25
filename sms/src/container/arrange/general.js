@@ -186,7 +186,7 @@ class ArrangeGeneral extends React.Component {
         const [year, month, day] = this.state.month.split('-');
         const { allArrangeInfo } = this.props.allArrange;
         const edit = this.state.edit;
-        console.log('allArrangeInfo: ', allArrangeInfo);
+        // console.log('allArrangeInfo: ', allArrangeInfo);
         // console.log(this.state)
         return (
             <div>

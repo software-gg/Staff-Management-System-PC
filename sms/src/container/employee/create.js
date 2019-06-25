@@ -28,7 +28,7 @@ class EmployeeCreate extends React.Component {
     }
 
     handleChange(key, val) {
-        console.log(this.state.employee)
+        // console.log(this.state.employee)
         this.setState({
             employee: {
                 ...this.state.employee,

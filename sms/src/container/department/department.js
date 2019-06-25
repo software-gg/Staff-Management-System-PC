@@ -68,7 +68,7 @@ class Department extends React.Component {
 
     complete = () => {
         const { depart, oldDepart } = this.state.edit;
-        console.log(oldDepart, depart);
+        // console.log(oldDepart, depart);
         this.props.editDepart(depart._id, oldDepart, depart);
         this.setState({
             edit: {

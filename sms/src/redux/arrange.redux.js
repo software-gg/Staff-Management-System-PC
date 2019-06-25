@@ -23,7 +23,7 @@ export function arrange(state = initState, action) {
                 msg: ''
             };
         case INSERT_ARR:
-            console.log(action)
+            // console.log(action)
             return {
                 ...state,
                 arrangeInfo: state.arrangeInfo.concat(action.arranges),
@@ -109,9 +109,9 @@ function searchSync(arrangeInfo) {
 
 export function search(condition) {
     return dispatch => {
-        console.log(condition)
+        // console.log(condition)
         axios.post(proxy + '/list/manager', condition).then(res => {
-            console.log(res);
+            // console.log(res);
             if (res.status === 200) {
                 // if (res.data.code !== 0)
                 //     dispatch(errMsg(res.data.msg));
@@ -152,7 +152,7 @@ export function insertArr(arrange = []) {
         axios.post(proxy + '/insert', {
             arrange
         }).then(res => {
-            console.log('res:', res);
+            // console.log('res:', res);
             if (res.status === 200) {
                 if (res.data.code !== 0)
                     dispatch(errMsg(res.data.msg));
